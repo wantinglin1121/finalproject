@@ -18,7 +18,7 @@ library(wordcloud)    # 文字雲
 library(topicmodels)  # 主題模型
 library(igraph)       # 主題模型關聯
 
-orgPath = "./Month_Data/text_title2"
+orgPath = "./Month_Data/text_title_all"
 text = Corpus(DirSource(orgPath), list(language = NA))
 text <- tm_map(text, removePunctuation) #過濾標點符號
 text <- tm_map(text, removeNumbers) #過濾數字
@@ -40,11 +40,11 @@ for( i in 1:length(text[[1]]) )
 
 totaldiff = levels(totalSegment$result)
 countMat = data.frame(totaldiff, c(rep(0, length(totaldiff))))
-#for( i in 1:length(totalSegment$result) )
-for( i in 1:300 )
+for( i in 1:length(totalSegment$result) )
+#for( i in 1:300 )
 {
-  #for( j in 1:length(totaldiff) )
-  for( j in 1:100 )
+  for( j in 1:length(totaldiff) )
+  #for( j in 1:100 )
   {
     if( nchar(totaldiff[j]) >= 2 &&
         totaldiff[j] == as.character(totalSegment$result[i]) )
@@ -58,3 +58,5 @@ names(countMat) = c("totaldiff", "freq")
 countMat[,2] = countMat[,2] / sum(countMat[,2])
 
 wordcloud(countMat$totaldiff, countMat$freq, min.freq = 1, random.order = F, ordered.colors = T)
+#wordcloud(countMat$totaldiff, countMat$freq, min.freq = 1, random.order = F, ordered.colors = T,colors = rainbow(length(totaldiff)))
+
